@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 /*****************************************************************************/
 // Implements the M PFB architecture referenced in the
 // "A Versatile Multichannel Filter Bank with Multiple Channel Bandwidths" paper.
@@ -206,7 +208,7 @@ begin
     end
 end
 
-//tlast_proc 
+//tlast_proc
 always @*
 begin
     next_tlast_d[3:0] = {tlast_d[2:0], s_axis_tlast};
@@ -318,10 +320,10 @@ dp_block_read_first_ram #(
   .DATA_WIDTH(32),
   .ADDR_WIDTH(8))
 sample_ram_0 (
-  .clk(clk), 
-  .wea(tvalid_d[3]), 
+  .clk(clk),
+  .wea(tvalid_d[3]),
   .addra(wr_addr_d[2][7:0]),
-  .dia(sig_d2), 
+  .dia(sig_d2),
   .addrb(rd_addr[7:0]),
   .dob(delay[0])
 );

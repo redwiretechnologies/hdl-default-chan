@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 
 /*****************************************************************************/
 //
@@ -5,7 +6,7 @@
 // File        : dp_block_read_first_ram.v
 // Description : Implements a single port RAM with block ram. The ram is a fully
 //               pipelined implementation -- 3 clock cycles from new read address
-//               to new data                                                     
+//               to new data
 //
 //
 /*****************************************************************************/
@@ -15,7 +16,7 @@ module dp_block_read_first_ram
 #(parameter DATA_WIDTH=32,
   parameter ADDR_WIDTH=8)
 (
-  input clk, 
+  input clk,
 
   input wea,
   input [ADDR_WIDTH-1:0] addra,

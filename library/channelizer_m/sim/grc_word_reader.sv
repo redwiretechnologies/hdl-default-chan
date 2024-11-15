@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 /*****************************************************************************/
 //
 // Author      : Phil Vallance
@@ -149,7 +151,7 @@ begin
 		//$display("curr position = %d", curr_position);
 		tsk_read_data(curr_position);
 	end
-	
+
 	if (enable_d == 1'b1 && buffer_end == 1'b0) begin
         if (ready_data == 1'b1) begin
 			next_valid = 1'b1;

@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: Apache-2.0
+
 /*****************************************************************************/
 //
 // Author      : PJV
 // File        : axi_fifo_2
-// Description : Generates FIFO with AXI interface. 
+// Description : Generates FIFO with AXI interface.
 //
 //                Latency = 3.
 //
@@ -15,7 +17,7 @@ module axi_fifo_2
 (
     input clk,
     input sync_reset,
-    
+
     input s_axis_tvalid,
     input [DATA_WIDTH-1:0] s_axis_tdata,
     output s_axis_tready,

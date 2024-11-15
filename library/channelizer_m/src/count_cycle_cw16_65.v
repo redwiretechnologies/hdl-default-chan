@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 /*****************************************************************************/
 //
 // Author : PJV
@@ -8,7 +10,7 @@
 //
 /*****************************************************************************/
 
-module count_cycle_cw16_65 #( 
+module count_cycle_cw16_65 #(
     parameter DATA_WIDTH=32,
     parameter TUSER_WIDTH=32)
 (

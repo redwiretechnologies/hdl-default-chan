@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 
 /*****************************************************************************/
 //
@@ -5,7 +6,7 @@
 // File        : cic_M256_N1_R1_iw5_0_correction_sp_rom.v
 // Description : Implements a single port RAM with block ram. The ram is a fully
 //               pipelined implementation -- 3 clock cycles from new read address
-//               to new data                                                     
+//               to new data
 //
 //
 /*****************************************************************************/
@@ -13,7 +14,7 @@
 
 module cic_M256_N1_R1_iw5_0_correction_sp_rom
 (
-  input clk, 
+  input clk,
 
   input [8:0] addra,
   output [12:0] doa

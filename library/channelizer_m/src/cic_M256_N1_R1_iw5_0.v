@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 
 /*****************************************************************************/
 //
@@ -18,7 +19,7 @@ module cic_M256_N1_R1_iw5_0
   input [8:0] msetting,
 
   input s_axis_tvalid,
-  input [4:0] s_axis_tdata, 
+  input [4:0] s_axis_tdata,
 
   output s_axis_tready,
   output m_axis_tvalid,
@@ -135,7 +136,7 @@ dsp48_cic_M256_N1_R1_iw5_0 integrator_section_0 (
 //latency = 10.
 comb_M256_N1_iw5_0 comb_section_0
 (
-  .clk(clk), 
+  .clk(clk),
   .sync_reset(sync_reset),
   .msetting(msetting),
   .s_axis_tvalid(comb_valid_0),
@@ -168,7 +169,7 @@ slicer_48_13 slicer (
 );
 
 cic_M256_N1_R1_iw5_0_correction_sp_rom corr_factor_rom (
-  .clk(clk), 
+  .clk(clk),
   .addra(msetting),
   .doa(corr_factor)
 );

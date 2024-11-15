@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 module dsp48_output_add
 (
     input clk,

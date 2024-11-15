@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 module default_chan_block_dac_hold (
   input             clk,
   input             resetn,

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+
 LIB_NAME = default_chan_block
 
 M_DEPS = \

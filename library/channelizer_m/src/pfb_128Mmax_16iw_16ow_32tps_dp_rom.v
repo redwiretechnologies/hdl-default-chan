@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 
 /*****************************************************************************/
 //
@@ -5,7 +6,7 @@
 // File        : pfb_128Mmax_16iw_16ow_32tps_dp_rom.v
 // Description : Implements a single port RAM with block ram. The ram is a fully
 //               pipelined implementation -- 3 clock cycles from new read address
-//               to new data                                                     
+//               to new data
 //
 //
 /*****************************************************************************/
@@ -13,7 +14,7 @@
 
 module pfb_128Mmax_16iw_16ow_32tps_dp_rom
 (
-  input clk, 
+  input clk,
   input wea,
   input [24:0] dia,
   input [11:0] addra,

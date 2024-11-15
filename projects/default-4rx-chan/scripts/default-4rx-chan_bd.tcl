@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+
 # Generic Ports
 
 create_bd_port -dir I pps

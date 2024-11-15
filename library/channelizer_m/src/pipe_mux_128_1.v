@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 /*************************************************************************/
 //// File        : pipe_mux_128_1.v
 // Description : Implements a pipelined multiplexer to be used in high speed design

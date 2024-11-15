@@ -1,11 +1,12 @@
+// SPDX-License-Identifier: Apache-2.0
 
 /*****************************************************************************/
 //
 // Author : PJV
 // File : comb_M256_N1_iw5_0.v
 // Description : Comb Filter.
-// The module implements a comb filter using a RAM block and 
-// a single DSP48A core. 
+// The module implements a comb filter using a RAM block and
+// a single DSP48A core.
 //
 
 //
@@ -83,9 +84,9 @@ u_diff_delay
 // EQ : C - CONCAT
 dsp48_comb_M256_N1_iw5_0 u_dsp (
   .clk(clk),
-  .c(c_d2), 
-  .concat(diff_delay), 
-  .p(comb_out) 
+  .c(c_d2),
+  .concat(diff_delay),
+  .p(comb_out)
 );
 
 endmodule
