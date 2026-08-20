@@ -1,395 +1,724 @@
 # SPDX-License-Identifier: Apache-2.0
 
-# Generic Ports
-
 create_bd_port -dir I pps
 
-create_bd_port -dir O tdd_sync_0_o
-create_bd_port -dir I tdd_sync_0_i
-create_bd_port -dir O tdd_sync_0_t
+create_bd_port -dir I ref_clk
 
-create_bd_port -dir O tdd_sync_1_o
-create_bd_port -dir I tdd_sync_1_i
-create_bd_port -dir O tdd_sync_1_t
+### Transceiver 0
 
-# TDD Blocks
+create_bd_port -dir I tx_output_enable_0
 
-ad_ip_instance util_tdd_sync util_ad9361_tdd_sync_0
-ad_ip_parameter util_ad9361_tdd_sync_0 CONFIG.TDD_SYNC_PERIOD 10000000
+create_bd_port -dir I mssi_sync_0
 
-ad_ip_instance util_tdd_sync util_ad9361_tdd_sync_1
-ad_ip_parameter util_ad9361_tdd_sync_1 CONFIG.TDD_SYNC_PERIOD 10000000
+# adrv9001 interface
+create_bd_port -dir I rx1_dclk_in_0_n
+create_bd_port -dir I rx1_dclk_in_0_p
+create_bd_port -dir I rx1_idata_in_0_n
+create_bd_port -dir I rx1_idata_in_0_p
+create_bd_port -dir I rx1_qdata_in_0_n
+create_bd_port -dir I rx1_qdata_in_0_p
+create_bd_port -dir I rx1_strobe_in_0_n
+create_bd_port -dir I rx1_strobe_in_0_p
 
-# ADI0 Ports
+create_bd_port -dir I rx2_dclk_in_0_n
+create_bd_port -dir I rx2_dclk_in_0_p
+create_bd_port -dir I rx2_idata_in_0_n
+create_bd_port -dir I rx2_idata_in_0_p
+create_bd_port -dir I rx2_qdata_in_0_n
+create_bd_port -dir I rx2_qdata_in_0_p
+create_bd_port -dir I rx2_strobe_in_0_n
+create_bd_port -dir I rx2_strobe_in_0_p
 
-create_bd_port -dir I rx_clk_in_0_p
-create_bd_port -dir I rx_clk_in_0_n
-create_bd_port -dir I rx_frame_in_0_p
-create_bd_port -dir I rx_frame_in_0_n
-create_bd_port -dir I -from 5 -to 0 rx_data_in_0_p
-create_bd_port -dir I -from 5 -to 0 rx_data_in_0_n
-create_bd_port -dir O tx_clk_out_0_p
-create_bd_port -dir O tx_clk_out_0_n
-create_bd_port -dir O tx_frame_out_0_p
-create_bd_port -dir O tx_frame_out_0_n
-create_bd_port -dir O -from 5 -to 0 tx_data_out_0_p
-create_bd_port -dir O -from 5 -to 0 tx_data_out_0_n
+create_bd_port -dir O tx1_dclk_out_0_n
+create_bd_port -dir O tx1_dclk_out_0_p
+create_bd_port -dir I tx1_dclk_in_0_n
+create_bd_port -dir I tx1_dclk_in_0_p
+create_bd_port -dir O tx1_idata_out_0_n
+create_bd_port -dir O tx1_idata_out_0_p
+create_bd_port -dir O tx1_qdata_out_0_n
+create_bd_port -dir O tx1_qdata_out_0_p
+create_bd_port -dir O tx1_strobe_out_0_n
+create_bd_port -dir O tx1_strobe_out_0_p
 
-create_bd_port -dir O enable_0
-create_bd_port -dir O txnrx_0
-create_bd_port -dir I up_enable_0
-create_bd_port -dir I up_txnrx_0
+create_bd_port -dir O tx2_dclk_out_0_n
+create_bd_port -dir O tx2_dclk_out_0_p
+create_bd_port -dir I tx2_dclk_in_0_n
+create_bd_port -dir I tx2_dclk_in_0_p
+create_bd_port -dir O tx2_idata_out_0_n
+create_bd_port -dir O tx2_idata_out_0_p
+create_bd_port -dir O tx2_qdata_out_0_n
+create_bd_port -dir O tx2_qdata_out_0_p
+create_bd_port -dir O tx2_strobe_out_0_n
+create_bd_port -dir O tx2_strobe_out_0_p
 
-# ADI1 Ports
+create_bd_port -dir O rx1_enable_0
+create_bd_port -dir O rx2_enable_0
+create_bd_port -dir O tx1_enable_0
+create_bd_port -dir O tx2_enable_0
 
-create_bd_port -dir I rx_clk_in_1_p
-create_bd_port -dir I rx_clk_in_1_n
-create_bd_port -dir I rx_frame_in_1_p
-create_bd_port -dir I rx_frame_in_1_n
-create_bd_port -dir I -from 5 -to 0 rx_data_in_1_p
-create_bd_port -dir I -from 5 -to 0 rx_data_in_1_n
-create_bd_port -dir O tx_clk_out_1_p
-create_bd_port -dir O tx_clk_out_1_n
-create_bd_port -dir O tx_frame_out_1_p
-create_bd_port -dir O tx_frame_out_1_n
-create_bd_port -dir O -from 5 -to 0 tx_data_out_1_p
-create_bd_port -dir O -from 5 -to 0 tx_data_out_1_n
+create_bd_port -dir I gpio_rx1_enable_in_0
+create_bd_port -dir I gpio_rx2_enable_in_0
+create_bd_port -dir I gpio_tx1_enable_in_0
+create_bd_port -dir I gpio_tx2_enable_in_0
 
-create_bd_port -dir O enable_1
-create_bd_port -dir O txnrx_1
-create_bd_port -dir I up_enable_1
-create_bd_port -dir I up_txnrx_1
+create_bd_port -dir I tdd_sync_0
+create_bd_port -dir O tdd_sync_cntr_0
 
-ad_ip_instance proc_sys_reset adc_clk_reset
+### Transceiver 1
 
-# ad9361 core (ADI0) declaration
+create_bd_port -dir I tx_output_enable_1
 
-ad_ip_instance axi_ad9361 axi_ad9361_0
-ad_ip_parameter axi_ad9361_0 CONFIG.ID 0
-ad_ip_parameter axi_ad9361_0 CONFIG.IO_DELAY_GROUP dev_0_if_delay_group
-ad_connect $sys_iodelay_clk axi_ad9361_0/delay_clk
+create_bd_port -dir I mssi_sync_1
 
-# ad9361 core (ADI1) declaration
+# adrv9001 interface
+create_bd_port -dir I rx1_dclk_in_1_n
+create_bd_port -dir I rx1_dclk_in_1_p
+create_bd_port -dir I rx1_idata_in_1_n
+create_bd_port -dir I rx1_idata_in_1_p
+create_bd_port -dir I rx1_qdata_in_1_n
+create_bd_port -dir I rx1_qdata_in_1_p
+create_bd_port -dir I rx1_strobe_in_1_n
+create_bd_port -dir I rx1_strobe_in_1_p
 
-ad_ip_instance axi_ad9361 axi_ad9361_1
-ad_ip_parameter axi_ad9361_1 CONFIG.ID 0
-ad_ip_parameter axi_ad9361_1 CONFIG.IO_DELAY_GROUP dev_1_if_delay_group
-ad_connect $sys_iodelay_clk axi_ad9361_1/delay_clk
+create_bd_port -dir I rx2_dclk_in_1_n
+create_bd_port -dir I rx2_dclk_in_1_p
+create_bd_port -dir I rx2_idata_in_1_n
+create_bd_port -dir I rx2_idata_in_1_p
+create_bd_port -dir I rx2_qdata_in_1_n
+create_bd_port -dir I rx2_qdata_in_1_p
+create_bd_port -dir I rx2_strobe_in_1_n
+create_bd_port -dir I rx2_strobe_in_1_p
 
-# Concat 0
+create_bd_port -dir O tx1_dclk_out_1_n
+create_bd_port -dir O tx1_dclk_out_1_p
+create_bd_port -dir I tx1_dclk_in_1_n
+create_bd_port -dir I tx1_dclk_in_1_p
+create_bd_port -dir O tx1_idata_out_1_n
+create_bd_port -dir O tx1_idata_out_1_p
+create_bd_port -dir O tx1_qdata_out_1_n
+create_bd_port -dir O tx1_qdata_out_1_p
+create_bd_port -dir O tx1_strobe_out_1_n
+create_bd_port -dir O tx1_strobe_out_1_p
 
-ad_ip_instance concat_9361 concat_9361_0
+create_bd_port -dir O tx2_dclk_out_1_n
+create_bd_port -dir O tx2_dclk_out_1_p
+create_bd_port -dir I tx2_dclk_in_1_n
+create_bd_port -dir I tx2_dclk_in_1_p
+create_bd_port -dir O tx2_idata_out_1_n
+create_bd_port -dir O tx2_idata_out_1_p
+create_bd_port -dir O tx2_qdata_out_1_n
+create_bd_port -dir O tx2_qdata_out_1_p
+create_bd_port -dir O tx2_strobe_out_1_n
+create_bd_port -dir O tx2_strobe_out_1_p
 
-# Concat 1
+create_bd_port -dir O rx1_enable_1
+create_bd_port -dir O rx2_enable_1
+create_bd_port -dir O tx1_enable_1
+create_bd_port -dir O tx2_enable_1
 
-ad_ip_instance concat_9361 concat_9361_1
+create_bd_port -dir I gpio_rx1_enable_in_1
+create_bd_port -dir I gpio_rx2_enable_in_1
+create_bd_port -dir I gpio_tx1_enable_in_1
+create_bd_port -dir I gpio_tx2_enable_in_1
 
-# Default block 0
+create_bd_port -dir I tdd_sync_1
+create_bd_port -dir O tdd_sync_cntr_1
 
-ad_ip_instance default_chan_block default_chan_block_0
+### Transceiver 0
+
+# Create Blocks
+
+# adrv9001
+
+ad_ip_instance axi_adrv9001 axi_adrv9001_0
+ad_ip_parameter axi_adrv9001_0 CONFIG.CMOS_LVDS_N 0
+ad_ip_parameter axi_adrv9001_0 CONFIG.USE_RX_CLK_FOR_TX1 1
+ad_ip_parameter axi_adrv9001_0 CONFIG.USE_RX_CLK_FOR_TX2 2
+ad_ip_parameter axi_adrv9001_0 CONFIG.IO_DELAY_GROUP dev_if_delay_group_0
+ad_ip_parameter axi_adrv9001_0 CONFIG.RX_USE_BUFG 1
+ad_ip_parameter axi_adrv9001_0 CONFIG.TX_USE_BUFG 1
+
+ad_ip_instance proc_sys_reset adc_clk_reset_0
+ad_ip_instance proc_sys_reset adc_clk_reset_1
+
+ad_ip_instance concat_9002 concat_9002_0
+ad_ip_instance concat_9002 concat_9002_1
+
+ad_ip_instance  default_chan_block   default_chan_block_0
 ad_ip_parameter default_chan_block_0 CONFIG.CLK_FREQ 100000000
 
-# Default block 1
-
-ad_ip_instance default_chan_block default_chan_block_1
+ad_ip_instance  default_chan_block   default_chan_block_1
 ad_ip_parameter default_chan_block_1 CONFIG.CLK_FREQ 100000000
 
-# AXI DMAs 0
+# dma for rx1
 
-ad_ip_instance axi_dmac axi_ad9361_adc_dma_0
-ad_ip_parameter axi_ad9361_adc_dma_0 CONFIG.DMA_TYPE_SRC 1
-ad_ip_parameter axi_ad9361_adc_dma_0 CONFIG.DMA_TYPE_DEST 0
-ad_ip_parameter axi_ad9361_adc_dma_0 CONFIG.CYCLIC 0
-ad_ip_parameter axi_ad9361_adc_dma_0 CONFIG.SYNC_TRANSFER_START 1
-ad_ip_parameter axi_ad9361_adc_dma_0 CONFIG.AXI_SLICE_SRC 0
-ad_ip_parameter axi_ad9361_adc_dma_0 CONFIG.AXI_SLICE_DEST 0
-ad_ip_parameter axi_ad9361_adc_dma_0 CONFIG.DMA_2D_TRANSFER 0
-ad_ip_parameter axi_ad9361_adc_dma_0 CONFIG.DMA_DATA_WIDTH_SRC 64
-ad_ip_parameter axi_ad9361_adc_dma_0 CONFIG.CACHE_COHERENT 1
-ad_ip_parameter axi_ad9361_adc_dma_0 CONFIG.AXI_AXCACHE 0b1111
-ad_ip_parameter axi_ad9361_adc_dma_0 CONFIG.AXI_AXPROT 0b010
+ad_ip_instance axi_dmac axi_adrv9001_rx1_dma_0
+ad_ip_parameter axi_adrv9001_rx1_dma_0 CONFIG.DMA_TYPE_SRC 1
+ad_ip_parameter axi_adrv9001_rx1_dma_0 CONFIG.DMA_TYPE_DEST 0
+ad_ip_parameter axi_adrv9001_rx1_dma_0 CONFIG.CYCLIC 0
+ad_ip_parameter axi_adrv9001_rx1_dma_0 CONFIG.SYNC_TRANSFER_START 1
+ad_ip_parameter axi_adrv9001_rx1_dma_0 CONFIG.AXI_SLICE_SRC 0
+ad_ip_parameter axi_adrv9001_rx1_dma_0 CONFIG.AXI_SLICE_DEST 0
+ad_ip_parameter axi_adrv9001_rx1_dma_0 CONFIG.DMA_2D_TRANSFER 0
+ad_ip_parameter axi_adrv9001_rx1_dma_0 CONFIG.DMA_DATA_WIDTH_SRC 64
+ad_ip_parameter axi_adrv9001_rx1_dma_0 CONFIG.CACHE_COHERENT 1
 
+# dma for rx2
 
-ad_ip_instance axi_dmac axi_ad9361_dac_dma_0
-ad_ip_parameter axi_ad9361_dac_dma_0 CONFIG.DMA_TYPE_SRC 0
-ad_ip_parameter axi_ad9361_dac_dma_0 CONFIG.DMA_TYPE_DEST 1
-ad_ip_parameter axi_ad9361_dac_dma_0 CONFIG.CYCLIC 1
-ad_ip_parameter axi_ad9361_dac_dma_0 CONFIG.SYNC_TRANSFER_START 0
-ad_ip_parameter axi_ad9361_dac_dma_0 CONFIG.AXI_SLICE_SRC 0
-ad_ip_parameter axi_ad9361_dac_dma_0 CONFIG.AXI_SLICE_DEST 1
-ad_ip_parameter axi_ad9361_dac_dma_0 CONFIG.DMA_2D_TRANSFER 0
-ad_ip_parameter axi_ad9361_dac_dma_0 CONFIG.DMA_DATA_WIDTH_DEST 64
-ad_ip_parameter axi_ad9361_dac_dma_0 CONFIG.CACHE_COHERENT 1
-ad_ip_parameter axi_ad9361_dac_dma_0 CONFIG.AXI_AXCACHE 0b1111
-ad_ip_parameter axi_ad9361_dac_dma_0 CONFIG.AXI_AXPROT 0b010
+ad_ip_instance axi_dmac axi_adrv9001_rx2_dma_0
+ad_ip_parameter axi_adrv9001_rx2_dma_0 CONFIG.DMA_TYPE_SRC 1
+ad_ip_parameter axi_adrv9001_rx2_dma_0 CONFIG.DMA_TYPE_DEST 0
+ad_ip_parameter axi_adrv9001_rx2_dma_0 CONFIG.CYCLIC 0
+ad_ip_parameter axi_adrv9001_rx2_dma_0 CONFIG.SYNC_TRANSFER_START 1
+ad_ip_parameter axi_adrv9001_rx2_dma_0 CONFIG.AXI_SLICE_SRC 0
+ad_ip_parameter axi_adrv9001_rx2_dma_0 CONFIG.AXI_SLICE_DEST 0
+ad_ip_parameter axi_adrv9001_rx2_dma_0 CONFIG.DMA_2D_TRANSFER 0
+ad_ip_parameter axi_adrv9001_rx2_dma_0 CONFIG.DMA_DATA_WIDTH_SRC 32
+ad_ip_parameter axi_adrv9001_rx2_dma_0 CONFIG.CACHE_COHERENT 1
 
+# dma for tx1
 
-# AXI DMAs 1
+ad_ip_instance axi_dmac axi_adrv9001_tx1_dma_0
+ad_ip_parameter axi_adrv9001_tx1_dma_0 CONFIG.DMA_TYPE_SRC 0
+ad_ip_parameter axi_adrv9001_tx1_dma_0 CONFIG.DMA_TYPE_DEST 1
+ad_ip_parameter axi_adrv9001_tx1_dma_0 CONFIG.CYCLIC 1
+ad_ip_parameter axi_adrv9001_tx1_dma_0 CONFIG.SYNC_TRANSFER_START 0
+ad_ip_parameter axi_adrv9001_tx1_dma_0 CONFIG.AXI_SLICE_SRC 0
+ad_ip_parameter axi_adrv9001_tx1_dma_0 CONFIG.AXI_SLICE_DEST 0
+ad_ip_parameter axi_adrv9001_tx1_dma_0 CONFIG.DMA_2D_TRANSFER 0
+ad_ip_parameter axi_adrv9001_tx1_dma_0 CONFIG.DMA_DATA_WIDTH_DEST 64
+ad_ip_parameter axi_adrv9001_tx1_dma_0 CONFIG.CACHE_COHERENT 1
 
-ad_ip_instance axi_dmac axi_ad9361_adc_dma_1
-ad_ip_parameter axi_ad9361_adc_dma_1 CONFIG.DMA_TYPE_SRC 1
-ad_ip_parameter axi_ad9361_adc_dma_1 CONFIG.DMA_TYPE_DEST 0
-ad_ip_parameter axi_ad9361_adc_dma_1 CONFIG.CYCLIC 0
-ad_ip_parameter axi_ad9361_adc_dma_1 CONFIG.SYNC_TRANSFER_START 1
-ad_ip_parameter axi_ad9361_adc_dma_1 CONFIG.AXI_SLICE_SRC 0
-ad_ip_parameter axi_ad9361_adc_dma_1 CONFIG.AXI_SLICE_DEST 0
-ad_ip_parameter axi_ad9361_adc_dma_1 CONFIG.DMA_2D_TRANSFER 0
-ad_ip_parameter axi_ad9361_adc_dma_1 CONFIG.DMA_DATA_WIDTH_SRC 64
-ad_ip_parameter axi_ad9361_adc_dma_1 CONFIG.CACHE_COHERENT 1
-ad_ip_parameter axi_ad9361_adc_dma_1 CONFIG.AXI_AXCACHE 0b1111
-ad_ip_parameter axi_ad9361_adc_dma_1 CONFIG.AXI_AXPROT 0b010
+# dma for tx2
 
-ad_ip_instance axi_dmac axi_ad9361_dac_dma_1
-ad_ip_parameter axi_ad9361_dac_dma_1 CONFIG.DMA_TYPE_SRC 0
-ad_ip_parameter axi_ad9361_dac_dma_1 CONFIG.DMA_TYPE_DEST 1
-ad_ip_parameter axi_ad9361_dac_dma_1 CONFIG.CYCLIC 1
-ad_ip_parameter axi_ad9361_dac_dma_1 CONFIG.SYNC_TRANSFER_START 0
-ad_ip_parameter axi_ad9361_dac_dma_1 CONFIG.AXI_SLICE_SRC 0
-ad_ip_parameter axi_ad9361_dac_dma_1 CONFIG.AXI_SLICE_DEST 1
-ad_ip_parameter axi_ad9361_dac_dma_1 CONFIG.DMA_2D_TRANSFER 0
-ad_ip_parameter axi_ad9361_dac_dma_1 CONFIG.DMA_DATA_WIDTH_DEST 64
-ad_ip_parameter axi_ad9361_dac_dma_1 CONFIG.CACHE_COHERENT 1
-ad_ip_parameter axi_ad9361_dac_dma_1 CONFIG.AXI_AXCACHE 0b1111
-ad_ip_parameter axi_ad9361_dac_dma_1 CONFIG.AXI_AXPROT 0b010
+ad_ip_instance axi_dmac axi_adrv9001_tx2_dma_0
+ad_ip_parameter axi_adrv9001_tx2_dma_0 CONFIG.DMA_TYPE_SRC 0
+ad_ip_parameter axi_adrv9001_tx2_dma_0 CONFIG.DMA_TYPE_DEST 1
+ad_ip_parameter axi_adrv9001_tx2_dma_0 CONFIG.CYCLIC 1
+ad_ip_parameter axi_adrv9001_tx2_dma_0 CONFIG.SYNC_TRANSFER_START 0
+ad_ip_parameter axi_adrv9001_tx2_dma_0 CONFIG.AXI_SLICE_SRC 0
+ad_ip_parameter axi_adrv9001_tx2_dma_0 CONFIG.AXI_SLICE_DEST 0
+ad_ip_parameter axi_adrv9001_tx2_dma_0 CONFIG.DMA_2D_TRANSFER 0
+ad_ip_parameter axi_adrv9001_tx2_dma_0 CONFIG.DMA_DATA_WIDTH_DEST 32
+ad_ip_parameter axi_adrv9001_tx2_dma_0 CONFIG.CACHE_COHERENT 1
 
+# ad9001 connections
 
-# AD0 port connections
+ad_connect  sys_500m_clk       axi_adrv9001_0/delay_clk
 
-ad_connect axi_ad9361_0/l_clk axi_ad9361_0/clk
-ad_connect axi_ad9361_0/dac_sync_out axi_ad9361_0/dac_sync_in
-ad_connect rx_clk_in_0_p axi_ad9361_0/rx_clk_in_p
-ad_connect rx_clk_in_0_n axi_ad9361_0/rx_clk_in_n
-ad_connect rx_frame_in_0_p axi_ad9361_0/rx_frame_in_p
-ad_connect rx_frame_in_0_n axi_ad9361_0/rx_frame_in_n
-ad_connect rx_data_in_0_p axi_ad9361_0/rx_data_in_p
-ad_connect rx_data_in_0_n axi_ad9361_0/rx_data_in_n
-ad_connect tx_clk_out_0_p axi_ad9361_0/tx_clk_out_p
-ad_connect tx_clk_out_0_n axi_ad9361_0/tx_clk_out_n
-ad_connect tx_frame_out_0_p axi_ad9361_0/tx_frame_out_p
-ad_connect tx_frame_out_0_n axi_ad9361_0/tx_frame_out_n
-ad_connect tx_data_out_0_p axi_ad9361_0/tx_data_out_p
-ad_connect tx_data_out_0_n axi_ad9361_0/tx_data_out_n
-ad_connect enable_0 axi_ad9361_0/enable
-ad_connect txnrx_0 axi_ad9361_0/txnrx
-ad_connect up_enable_0 axi_ad9361_0/up_enable
-ad_connect up_txnrx_0 axi_ad9361_0/up_txnrx
+#### STILL UNDER REVIEW
+#ad_connect  axi_adrv9001_0/adc_1_clk axi_adrv9001_rx1_dma_0/fifo_wr_clk
+#ad_connect  axi_adrv9001_0/adc_2_clk axi_adrv9001_rx2_dma_0/fifo_wr_clk
+#ad_connect  axi_adrv9001_0/dac_1_clk axi_adrv9001_tx1_dma_0/m_axis_aclk
+#ad_connect  axi_adrv9001_0/dac_2_clk axi_adrv9001_tx2_dma_0/m_axis_aclk
+####
 
-# AD1 port connections
+ad_connect ref_clk           axi_adrv9001_0/ref_clk
 
-ad_connect axi_ad9361_1/l_clk axi_ad9361_1/clk
-ad_connect axi_ad9361_1/dac_sync_out axi_ad9361_1/dac_sync_in
-ad_connect rx_clk_in_1_p axi_ad9361_1/rx_clk_in_p
-ad_connect rx_clk_in_1_n axi_ad9361_1/rx_clk_in_n
-ad_connect rx_frame_in_1_p axi_ad9361_1/rx_frame_in_p
-ad_connect rx_frame_in_1_n axi_ad9361_1/rx_frame_in_n
-ad_connect rx_data_in_1_p axi_ad9361_1/rx_data_in_p
-ad_connect rx_data_in_1_n axi_ad9361_1/rx_data_in_n
-ad_connect tx_clk_out_1_p axi_ad9361_1/tx_clk_out_p
-ad_connect tx_clk_out_1_n axi_ad9361_1/tx_clk_out_n
-ad_connect tx_frame_out_1_p axi_ad9361_1/tx_frame_out_p
-ad_connect tx_frame_out_1_n axi_ad9361_1/tx_frame_out_n
-ad_connect tx_data_out_1_p axi_ad9361_1/tx_data_out_p
-ad_connect tx_data_out_1_n axi_ad9361_1/tx_data_out_n
-ad_connect enable_1 axi_ad9361_1/enable
-ad_connect txnrx_1 axi_ad9361_1/txnrx
-ad_connect up_enable_1 axi_ad9361_1/up_enable
-ad_connect up_txnrx_1 axi_ad9361_1/up_txnrx
+ad_connect tx_output_enable_0  axi_adrv9001_0/tx_output_enable
 
-# AD0 <-> concat
+ad_connect mssi_sync_0         axi_adrv9001_0/mssi_sync_in
 
-ad_connect axi_ad9361_0/adc_enable_i0 concat_9361_0/adc_enable_i0
-ad_connect axi_ad9361_0/adc_valid_i0 concat_9361_0/adc_valid_i0
-ad_connect axi_ad9361_0/adc_data_i0 concat_9361_0/adc_data_i0
-ad_connect axi_ad9361_0/adc_enable_q0 concat_9361_0/adc_enable_q0
-ad_connect axi_ad9361_0/adc_valid_q0 concat_9361_0/adc_valid_q0
-ad_connect axi_ad9361_0/adc_data_q0 concat_9361_0/adc_data_q0
-ad_connect axi_ad9361_0/adc_enable_i1 concat_9361_0/adc_enable_i1
-ad_connect axi_ad9361_0/adc_valid_i1 concat_9361_0/adc_valid_i1
-ad_connect axi_ad9361_0/adc_data_i1 concat_9361_0/adc_data_i1
-ad_connect axi_ad9361_0/adc_enable_q1 concat_9361_0/adc_enable_q1
-ad_connect axi_ad9361_0/adc_valid_q1 concat_9361_0/adc_valid_q1
-ad_connect axi_ad9361_0/adc_data_q1 concat_9361_0/adc_data_q1
+ad_connect rx1_dclk_in_0_n     axi_adrv9001_0/rx1_dclk_in_n_NC
+ad_connect rx1_dclk_in_0_p     axi_adrv9001_0/rx1_dclk_in_p_dclk_in
+ad_connect rx1_idata_in_0_n    axi_adrv9001_0/rx1_idata_in_n_idata0
+ad_connect rx1_idata_in_0_p    axi_adrv9001_0/rx1_idata_in_p_idata1
+ad_connect rx1_qdata_in_0_n    axi_adrv9001_0/rx1_qdata_in_n_qdata2
+ad_connect rx1_qdata_in_0_p    axi_adrv9001_0/rx1_qdata_in_p_qdata3
+ad_connect rx1_strobe_in_0_n   axi_adrv9001_0/rx1_strobe_in_n_NC
+ad_connect rx1_strobe_in_0_p   axi_adrv9001_0/rx1_strobe_in_p_strobe_in
 
-ad_connect axi_ad9361_0/dac_enable_i0 concat_9361_0/dac_enable_i0
-ad_connect axi_ad9361_0/dac_valid_i0 concat_9361_0/dac_valid_i0
-ad_connect axi_ad9361_0/dac_enable_q0 concat_9361_0/dac_enable_q0
-ad_connect axi_ad9361_0/dac_valid_q0 concat_9361_0/dac_valid_q0
-ad_connect axi_ad9361_0/dac_enable_i1 concat_9361_0/dac_enable_i1
-ad_connect axi_ad9361_0/dac_valid_i1 concat_9361_0/dac_valid_i1
-ad_connect axi_ad9361_0/dac_enable_q1 concat_9361_0/dac_enable_q1
-ad_connect axi_ad9361_0/dac_valid_q1 concat_9361_0/dac_valid_q1
+ad_connect rx2_dclk_in_0_n     axi_adrv9001_0/rx2_dclk_in_n_NC
+ad_connect rx2_dclk_in_0_p     axi_adrv9001_0/rx2_dclk_in_p_dclk_in
+ad_connect rx2_idata_in_0_n    axi_adrv9001_0/rx2_idata_in_n_idata0
+ad_connect rx2_idata_in_0_p    axi_adrv9001_0/rx2_idata_in_p_idata1
+ad_connect rx2_qdata_in_0_n    axi_adrv9001_0/rx2_qdata_in_n_qdata2
+ad_connect rx2_qdata_in_0_p    axi_adrv9001_0/rx2_qdata_in_p_qdata3
+ad_connect rx2_strobe_in_0_n   axi_adrv9001_0/rx2_strobe_in_n_NC
+ad_connect rx2_strobe_in_0_p   axi_adrv9001_0/rx2_strobe_in_p_strobe_in
 
-ad_connect concat_9361_0/dac_data_i0 axi_ad9361_0/dac_data_i0
-ad_connect concat_9361_0/dac_data_q0 axi_ad9361_0/dac_data_q0
-ad_connect concat_9361_0/dac_data_i1 axi_ad9361_0/dac_data_i1
-ad_connect concat_9361_0/dac_data_q1 axi_ad9361_0/dac_data_q1
+ad_connect tx1_dclk_out_0_n    axi_adrv9001_0/tx1_dclk_out_n_NC
+ad_connect tx1_dclk_out_0_p    axi_adrv9001_0/tx1_dclk_out_p_dclk_out
+ad_connect tx1_dclk_in_0_n     axi_adrv9001_0/tx1_dclk_in_n_NC
+ad_connect tx1_dclk_in_0_p     axi_adrv9001_0/tx1_dclk_in_p_dclk_in
+ad_connect tx1_idata_out_0_n   axi_adrv9001_0/tx1_idata_out_n_idata0
+ad_connect tx1_idata_out_0_p   axi_adrv9001_0/tx1_idata_out_p_idata1
+ad_connect tx1_qdata_out_0_n   axi_adrv9001_0/tx1_qdata_out_n_qdata2
+ad_connect tx1_qdata_out_0_p   axi_adrv9001_0/tx1_qdata_out_p_qdata3
+ad_connect tx1_strobe_out_0_n  axi_adrv9001_0/tx1_strobe_out_n_NC
+ad_connect tx1_strobe_out_0_p  axi_adrv9001_0/tx1_strobe_out_p_strobe_out
 
-# AD1 <-> concat
+ad_connect tx2_dclk_out_0_n    axi_adrv9001_0/tx2_dclk_out_n_NC
+ad_connect tx2_dclk_out_0_p    axi_adrv9001_0/tx2_dclk_out_p_dclk_out
+ad_connect tx2_dclk_in_0_n     axi_adrv9001_0/tx2_dclk_in_n_NC
+ad_connect tx2_dclk_in_0_p     axi_adrv9001_0/tx2_dclk_in_p_dclk_in
+ad_connect tx2_idata_out_0_n   axi_adrv9001_0/tx2_idata_out_n_idata0
+ad_connect tx2_idata_out_0_p   axi_adrv9001_0/tx2_idata_out_p_idata1
+ad_connect tx2_qdata_out_0_n   axi_adrv9001_0/tx2_qdata_out_n_qdata2
+ad_connect tx2_qdata_out_0_p   axi_adrv9001_0/tx2_qdata_out_p_qdata3
+ad_connect tx2_strobe_out_0_n  axi_adrv9001_0/tx2_strobe_out_n_NC
+ad_connect tx2_strobe_out_0_p  axi_adrv9001_0/tx2_strobe_out_p_strobe_out
 
-ad_connect axi_ad9361_1/adc_enable_i0 concat_9361_1/adc_enable_i0
-ad_connect axi_ad9361_1/adc_valid_i0 concat_9361_1/adc_valid_i0
-ad_connect axi_ad9361_1/adc_data_i0 concat_9361_1/adc_data_i0
-ad_connect axi_ad9361_1/adc_enable_q0 concat_9361_1/adc_enable_q0
-ad_connect axi_ad9361_1/adc_valid_q0 concat_9361_1/adc_valid_q0
-ad_connect axi_ad9361_1/adc_data_q0 concat_9361_1/adc_data_q0
-ad_connect axi_ad9361_1/adc_enable_i1 concat_9361_1/adc_enable_i1
-ad_connect axi_ad9361_1/adc_valid_i1 concat_9361_1/adc_valid_i1
-ad_connect axi_ad9361_1/adc_data_i1 concat_9361_1/adc_data_i1
-ad_connect axi_ad9361_1/adc_enable_q1 concat_9361_1/adc_enable_q1
-ad_connect axi_ad9361_1/adc_valid_q1 concat_9361_1/adc_valid_q1
-ad_connect axi_ad9361_1/adc_data_q1 concat_9361_1/adc_data_q1
+ad_connect rx1_enable_0        axi_adrv9001_0/rx1_enable
+ad_connect rx2_enable_0        axi_adrv9001_0/rx2_enable
+ad_connect tx1_enable_0        axi_adrv9001_0/tx1_enable
+ad_connect tx2_enable_0        axi_adrv9001_0/tx2_enable
 
-ad_connect axi_ad9361_1/dac_enable_i0 concat_9361_1/dac_enable_i0
-ad_connect axi_ad9361_1/dac_valid_i0 concat_9361_1/dac_valid_i0
-ad_connect axi_ad9361_1/dac_enable_q0 concat_9361_1/dac_enable_q0
-ad_connect axi_ad9361_1/dac_valid_q0 concat_9361_1/dac_valid_q0
-ad_connect axi_ad9361_1/dac_enable_i1 concat_9361_1/dac_enable_i1
-ad_connect axi_ad9361_1/dac_valid_i1 concat_9361_1/dac_valid_i1
-ad_connect axi_ad9361_1/dac_enable_q1 concat_9361_1/dac_enable_q1
-ad_connect axi_ad9361_1/dac_valid_q1 concat_9361_1/dac_valid_q1
+ad_connect gpio_rx1_enable_in_0  axi_adrv9001_0/gpio_rx1_enable_in
+ad_connect gpio_rx2_enable_in_0  axi_adrv9001_0/gpio_rx2_enable_in
+ad_connect gpio_tx1_enable_in_0  axi_adrv9001_0/gpio_tx1_enable_in
+ad_connect gpio_tx2_enable_in_0  axi_adrv9001_0/gpio_tx2_enable_in
 
-ad_connect concat_9361_1/dac_data_i0 axi_ad9361_1/dac_data_i0
-ad_connect concat_9361_1/dac_data_q0 axi_ad9361_1/dac_data_q0
-ad_connect concat_9361_1/dac_data_i1 axi_ad9361_1/dac_data_i1
-ad_connect concat_9361_1/dac_data_q1 axi_ad9361_1/dac_data_q1
+ad_connect tdd_sync_0 axi_adrv9001_0/tdd_sync
+ad_connect tdd_sync_cntr_0 axi_adrv9001_0/tdd_sync_cntr
 
-# default_chan_block_0 -> AD9361_0
+# adc clk resets
+ad_connect sys_cpu_resetn adc_clk_reset_0/ext_reset_in
+ad_connect sys_cpu_resetn adc_clk_reset_1/ext_reset_in
+ad_connect axi_adrv9001_0/adc_1_clk adc_clk_reset_0/slowest_sync_clk
+ad_connect axi_adrv9001_0/adc_2_clk adc_clk_reset_1/slowest_sync_clk
 
-ad_connect default_chan_block_0/adc_overflow axi_ad9361_0/adc_dovf
-ad_connect default_chan_block_0/dac_underflow axi_ad9361_0/dac_dunf
+# ADRV9002 <-> concat_0
+ad_connect axi_adrv9001_0/adc_1_enable_i0 concat_9002_0/adc_enable_i0
+ad_connect axi_adrv9001_0/adc_1_valid_i0  concat_9002_0/adc_valid_i0
+ad_connect axi_adrv9001_0/adc_1_data_i0   concat_9002_0/adc_data_i0
+ad_connect axi_adrv9001_0/adc_1_enable_q0 concat_9002_0/adc_enable_q0
+ad_connect axi_adrv9001_0/adc_1_valid_q0  concat_9002_0/adc_valid_q0
+ad_connect axi_adrv9001_0/adc_1_data_q0   concat_9002_0/adc_data_q0
+ad_connect axi_adrv9001_0/adc_1_enable_i1 concat_9002_0/adc_enable_i1
+ad_connect axi_adrv9001_0/adc_1_valid_i1  concat_9002_0/adc_valid_i1
+ad_connect axi_adrv9001_0/adc_1_data_i1   concat_9002_0/adc_data_i1
+ad_connect axi_adrv9001_0/adc_1_enable_q1 concat_9002_0/adc_enable_q1
+ad_connect axi_adrv9001_0/adc_1_valid_q1  concat_9002_0/adc_valid_q1
+ad_connect axi_adrv9001_0/adc_1_data_q1   concat_9002_0/adc_data_q1
+
+ad_connect axi_adrv9001_0/dac_1_enable_i0 concat_9002_0/dac_enable_i0
+ad_connect axi_adrv9001_0/dac_1_valid_i0  concat_9002_0/dac_valid_i0
+ad_connect axi_adrv9001_0/dac_1_enable_q0 concat_9002_0/dac_enable_q0
+ad_connect axi_adrv9001_0/dac_1_valid_q0  concat_9002_0/dac_valid_q0
+ad_connect axi_adrv9001_0/dac_1_enable_i1 concat_9002_0/dac_enable_i1
+ad_connect axi_adrv9001_0/dac_1_valid_i1  concat_9002_0/dac_valid_i1
+ad_connect axi_adrv9001_0/dac_1_enable_q1 concat_9002_0/dac_enable_q1
+ad_connect axi_adrv9001_0/dac_1_valid_q1  concat_9002_0/dac_valid_q1
+
+ad_connect concat_9002_0/dac_data_i0 axi_adrv9001_0/dac_1_data_i0
+ad_connect concat_9002_0/dac_data_q0 axi_adrv9001_0/dac_1_data_q0
+ad_connect concat_9002_0/dac_data_i1 axi_adrv9001_0/dac_1_data_i1
+ad_connect concat_9002_0/dac_data_q1 axi_adrv9001_0/dac_1_data_q1
+
+# ADRV9002 <-> concat_1
+ad_connect axi_adrv9001_0/adc_2_enable_i0 concat_9002_1/adc_enable_i0
+ad_connect axi_adrv9001_0/adc_2_valid_i0  concat_9002_1/adc_valid_i0
+ad_connect axi_adrv9001_0/adc_2_data_i0   concat_9002_1/adc_data_i0
+ad_connect axi_adrv9001_0/adc_2_enable_q0 concat_9002_1/adc_enable_q0
+ad_connect axi_adrv9001_0/adc_2_valid_q0  concat_9002_1/adc_valid_q0
+ad_connect axi_adrv9001_0/adc_2_data_q0   concat_9002_1/adc_data_q0
+ad_connect GND                            concat_9002_1/adc_enable_i1
+ad_connect GND                            concat_9002_1/adc_valid_i1
+ad_connect GND                            concat_9002_1/adc_data_i1
+ad_connect GND                            concat_9002_1/adc_enable_q1
+ad_connect GND                            concat_9002_1/adc_valid_q1
+ad_connect GND                            concat_9002_1/adc_data_q1
+
+ad_connect axi_adrv9001_0/dac_2_enable_i0 concat_9002_1/dac_enable_i0
+ad_connect axi_adrv9001_0/dac_2_valid_i0  concat_9002_1/dac_valid_i0
+ad_connect axi_adrv9001_0/dac_2_enable_q0 concat_9002_1/dac_enable_q0
+ad_connect axi_adrv9001_0/dac_2_valid_q0  concat_9002_1/dac_valid_q0
+
+ad_connect concat_9002_1/dac_data_i0 axi_adrv9001_0/dac_2_data_i0
+ad_connect concat_9002_1/dac_data_q0 axi_adrv9001_0/dac_2_data_q0
+
+# default_chan_block_0 -> ADRV9002
+ad_connect default_chan_block_0/adc_overflow  axi_adrv9001_0/adc_1_dovf
+ad_connect default_chan_block_0/dac_underflow axi_adrv9001_0/dac_1_dunf
+
+# default_chan_block_1 -> ADRV9002
+ad_connect default_chan_block_1/adc_overflow  axi_adrv9001_0/adc_2_dovf
+ad_connect default_chan_block_1/dac_underflow axi_adrv9001_0/dac_2_dunf
 
 # default_chan_block_0 <-> concat_0
+ad_connect concat_9002_0/adc_data   default_chan_block_0/adc_data
+ad_connect concat_9002_0/adc_enable default_chan_block_0/adc_enable
+ad_connect concat_9002_0/adc_valid  default_chan_block_0/adc_valid
 
-ad_connect concat_9361_0/adc_data default_chan_block_0/adc_data
-ad_connect concat_9361_0/adc_enable default_chan_block_0/adc_enable
-ad_connect concat_9361_0/adc_valid default_chan_block_0/adc_valid
-
-ad_connect default_chan_block_0/dac_data concat_9361_0/dac_data
-ad_connect concat_9361_0/dac_enable default_chan_block_0/dac_enable
-ad_connect concat_9361_0/dac_valid default_chan_block_0/dac_valid
-
-# DAC_DMA_0 -> default_chan_block_0
-
-ad_connect axi_ad9361_dac_dma_0/m_axis default_chan_block_0/s_dac_dma
-
-# default_chan_block_0 -> ADC_DMA_0
-
-ad_connect default_chan_block_0/m_adc_dma axi_ad9361_adc_dma_0/s_axis
-
-# default_chan_block_1 -> AD9361_1
-
-ad_connect default_chan_block_1/adc_overflow axi_ad9361_1/adc_dovf
-ad_connect default_chan_block_1/dac_underflow axi_ad9361_1/dac_dunf
+ad_connect default_chan_block_0/dac_data concat_9002_0/dac_data
+ad_connect concat_9002_0/dac_enable default_chan_block_0/dac_enable
+ad_connect concat_9002_0/dac_valid  default_chan_block_0/dac_valid
 
 # default_chan_block_1 <-> concat_1
+ad_connect concat_9002_1/adc_data   default_chan_block_1/adc_data
+ad_connect concat_9002_1/adc_enable default_chan_block_1/adc_enable
+ad_connect concat_9002_1/adc_valid  default_chan_block_1/adc_valid
 
-ad_connect concat_9361_1/adc_data default_chan_block_1/adc_data
-ad_connect concat_9361_1/adc_enable default_chan_block_1/adc_enable
-ad_connect concat_9361_1/adc_valid default_chan_block_1/adc_valid
+ad_connect default_chan_block_1/dac_data concat_9002_1/dac_data
+ad_connect concat_9002_1/dac_enable default_chan_block_1/dac_enable
+ad_connect concat_9002_1/dac_valid  default_chan_block_1/dac_valid
 
-ad_connect default_chan_block_1/dac_data concat_9361_1/dac_data
-ad_connect concat_9361_1/dac_enable default_chan_block_1/dac_enable
-ad_connect concat_9361_1/dac_valid default_chan_block_1/dac_valid
+# DAC_DMA -> default_chan_block
+ad_connect axi_adrv9001_tx1_dma_0/m_axis default_chan_block_0/s_dac_dma
+ad_connect axi_adrv9001_tx2_dma_0/m_axis default_chan_block_1/s_dac_dma
 
-# DAC_DMA_1 -> default_chan_block_1
-
-ad_connect axi_ad9361_dac_dma_1/m_axis default_chan_block_1/s_dac_dma
-
-# default_chan_block_1 -> ADC_DMA_1
-
-ad_connect default_chan_block_1/m_adc_dma axi_ad9361_adc_dma_1/s_axis
+# default_chan_block -> ADC_DMA
+ad_connect default_chan_block_0/m_adc_dma axi_adrv9001_rx1_dma_0/s_axis
+ad_connect default_chan_block_1/m_adc_dma axi_adrv9001_rx2_dma_0/s_axis
 
 # pps
-
 ad_connect pps default_chan_block_0/pps
 ad_connect pps default_chan_block_1/pps
 
-# adc clk resets
+#### BREAK
 
-ad_connect sys_cpu_resetn adc_clk_reset/ext_reset_in
-ad_connect axi_ad9361_0/l_clk adc_clk_reset/slowest_sync_clk
-
-# Default Block 0: Clock and Resets
-
-ad_connect axi_ad9361_0/l_clk default_chan_block_0/adc_clk
-ad_connect axi_ad9361_0/l_clk default_chan_block_0/dac_clk
+# Test Block: Clock and Resets
+ad_connect axi_adrv9001_0/adc_1_clk default_chan_block_0/adc_clk
+ad_connect axi_adrv9001_0/adc_2_clk default_chan_block_1/adc_clk
+ad_connect axi_adrv9001_0/dac_1_clk default_chan_block_0/dac_clk
+ad_connect axi_adrv9001_0/dac_2_clk default_chan_block_1/dac_clk
 ad_connect sys_user_clk default_chan_block_0/user_clk
 ad_connect sys_user_clk default_chan_block_0/m_adc_dma_aclk
 ad_connect sys_user_clk default_chan_block_0/s_dac_dma_aclk
-ad_connect sys_user_clk axi_ad9361_dac_dma_0/m_axis_aclk
-ad_connect sys_user_clk axi_ad9361_adc_dma_0/s_axis_aclk
-
-ad_connect adc_clk_reset/peripheral_aresetn default_chan_block_0/adc_rstn
-ad_connect adc_clk_reset/peripheral_aresetn default_chan_block_0/dac_rstn
-ad_connect sys_user_resetn default_chan_block_0/user_resetn
-ad_connect sys_user_resetn default_chan_block_0/m_adc_dma_aresetn
-ad_connect sys_user_resetn default_chan_block_0/s_dac_dma_aresetn
-
-# Default Block 1: Clock and Resets
-
-ad_connect axi_ad9361_1/l_clk default_chan_block_1/adc_clk
-ad_connect axi_ad9361_1/l_clk default_chan_block_1/dac_clk
 ad_connect sys_user_clk default_chan_block_1/user_clk
 ad_connect sys_user_clk default_chan_block_1/m_adc_dma_aclk
 ad_connect sys_user_clk default_chan_block_1/s_dac_dma_aclk
-ad_connect sys_user_clk axi_ad9361_dac_dma_1/m_axis_aclk
-ad_connect sys_user_clk axi_ad9361_adc_dma_1/s_axis_aclk
+ad_connect sys_user_clk axi_adrv9001_rx1_dma_0/s_axis_aclk
+ad_connect sys_user_clk axi_adrv9001_rx2_dma_0/s_axis_aclk
+ad_connect sys_user_clk axi_adrv9001_tx1_dma_0/m_axis_aclk
+ad_connect sys_user_clk axi_adrv9001_tx2_dma_0/m_axis_aclk
 
-ad_connect adc_clk_reset/peripheral_aresetn default_chan_block_1/adc_rstn
-ad_connect adc_clk_reset/peripheral_aresetn default_chan_block_1/dac_rstn
+ad_connect adc_clk_reset_0/peripheral_aresetn default_chan_block_0/adc_rstn
+ad_connect adc_clk_reset_0/peripheral_aresetn default_chan_block_0/dac_rstn
+ad_connect adc_clk_reset_1/peripheral_aresetn default_chan_block_1/adc_rstn
+ad_connect adc_clk_reset_1/peripheral_aresetn default_chan_block_1/dac_rstn
+ad_connect sys_user_resetn default_chan_block_0/user_resetn
+ad_connect sys_user_resetn default_chan_block_0/m_adc_dma_aresetn
+ad_connect sys_user_resetn default_chan_block_0/s_dac_dma_aresetn
 ad_connect sys_user_resetn default_chan_block_1/user_resetn
 ad_connect sys_user_resetn default_chan_block_1/m_adc_dma_aresetn
 ad_connect sys_user_resetn default_chan_block_1/s_dac_dma_aresetn
 
-# DMA Reset
-ad_connect sys_cpu_resetn axi_ad9361_adc_dma_0/m_dest_axi_aresetn
-ad_connect sys_cpu_resetn axi_ad9361_adc_dma_1/m_dest_axi_aresetn
+# DMA
+ad_connect sys_cpu_resetn axi_adrv9001_rx1_dma_0/m_dest_axi_aresetn
+ad_connect sys_cpu_resetn axi_adrv9001_rx2_dma_0/m_dest_axi_aresetn
 
-# ADC Reset
-ad_connect sys_cpu_resetn axi_ad9361_dac_dma_0/m_src_axi_aresetn
-ad_connect sys_cpu_resetn axi_ad9361_dac_dma_1/m_src_axi_aresetn
+# ADC
+ad_connect sys_cpu_resetn axi_adrv9001_tx1_dma_0/m_src_axi_aresetn
+ad_connect sys_cpu_resetn axi_adrv9001_tx2_dma_0/m_src_axi_aresetn
 
-# tdd-sync_0
 
-ad_connect sys_cpu_clk util_ad9361_tdd_sync_0/clk
-ad_connect sys_cpu_resetn util_ad9361_tdd_sync_0/rstn
-ad_connect util_ad9361_tdd_sync_0/sync_out axi_ad9361_0/tdd_sync
-ad_connect util_ad9361_tdd_sync_0/sync_mode axi_ad9361_0/tdd_sync_cntr
-ad_connect tdd_sync_0_t axi_ad9361_0/tdd_sync_cntr
-ad_connect tdd_sync_0_o util_ad9361_tdd_sync_0/sync_out
-ad_connect tdd_sync_0_i util_ad9361_tdd_sync_0/sync_in
+### Transceiver 1
 
-# tdd-sync_1
+# Create Blocks
 
-ad_connect sys_cpu_clk util_ad9361_tdd_sync_1/clk
-ad_connect sys_cpu_resetn util_ad9361_tdd_sync_1/rstn
-ad_connect util_ad9361_tdd_sync_1/sync_out axi_ad9361_1/tdd_sync
-ad_connect util_ad9361_tdd_sync_1/sync_mode axi_ad9361_1/tdd_sync_cntr
-ad_connect tdd_sync_1_t axi_ad9361_1/tdd_sync_cntr
-ad_connect tdd_sync_1_o util_ad9361_tdd_sync_1/sync_out
-ad_connect tdd_sync_1_i util_ad9361_tdd_sync_1/sync_in
+# adrv9001
 
-# address map
+ad_ip_instance axi_adrv9001 axi_adrv9001_1
+ad_ip_parameter axi_adrv9001_1 CONFIG.ID 1
+ad_ip_parameter axi_adrv9001_1 CONFIG.CMOS_LVDS_N 0
+ad_ip_parameter axi_adrv9001_1 CONFIG.USE_RX_CLK_FOR_TX1 1
+ad_ip_parameter axi_adrv9001_1 CONFIG.USE_RX_CLK_FOR_TX2 2
+ad_ip_parameter axi_adrv9001_1 CONFIG.IO_DELAY_GROUP dev_if_delay_group_1
+ad_ip_parameter axi_adrv9001_1 CONFIG.RX_USE_BUFG 1
+ad_ip_parameter axi_adrv9001_1 CONFIG.TX_USE_BUFG 1
 
-ad_cpu_interconnect 0x79020000 axi_ad9361_0
-ad_cpu_interconnect 0x7C400000 axi_ad9361_adc_dma_0
-ad_cpu_interconnect 0x7C420000 axi_ad9361_dac_dma_0
-ad_cpu_interconnect 0x79040000 axi_ad9361_1
-ad_cpu_interconnect 0x7C600000 axi_ad9361_adc_dma_1
-ad_cpu_interconnect 0x7C620000 axi_ad9361_dac_dma_1
-ad_cpu_interconnect 0x7D000000 default_chan_block_0
-ad_cpu_interconnect 0x7E000000 default_chan_block_1
+ad_ip_instance proc_sys_reset adc_clk_reset_2
+ad_ip_instance proc_sys_reset adc_clk_reset_3
 
-ad_mem_hpc0_interconnect sys_cpu_clk sys_ps7/S_AXI_HPC0
-ad_mem_hpc0_interconnect sys_cpu_clk axi_ad9361_adc_dma_0/m_dest_axi
-ad_mem_hpc0_interconnect sys_cpu_clk axi_ad9361_dac_dma_0/m_src_axi
-ad_mem_hpc0_interconnect sys_cpu_clk axi_ad9361_adc_dma_1/m_dest_axi
-ad_mem_hpc0_interconnect sys_cpu_clk axi_ad9361_dac_dma_1/m_src_axi
+ad_ip_instance concat_9002 concat_9002_2
+ad_ip_instance concat_9002 concat_9002_3
+
+ad_ip_instance  default_chan_block   default_chan_block_2
+ad_ip_parameter default_chan_block_2 CONFIG.CLK_FREQ 100000000
+
+ad_ip_instance  default_chan_block   default_chan_block_3
+ad_ip_parameter default_chan_block_3 CONFIG.CLK_FREQ 100000000
+
+# dma for rx1
+
+ad_ip_instance axi_dmac axi_adrv9001_rx1_dma_1
+ad_ip_parameter axi_adrv9001_rx1_dma_1 CONFIG.DMA_TYPE_SRC 1
+ad_ip_parameter axi_adrv9001_rx1_dma_1 CONFIG.DMA_TYPE_DEST 0
+ad_ip_parameter axi_adrv9001_rx1_dma_1 CONFIG.CYCLIC 0
+ad_ip_parameter axi_adrv9001_rx1_dma_1 CONFIG.SYNC_TRANSFER_START 1
+ad_ip_parameter axi_adrv9001_rx1_dma_1 CONFIG.AXI_SLICE_SRC 0
+ad_ip_parameter axi_adrv9001_rx1_dma_1 CONFIG.AXI_SLICE_DEST 0
+ad_ip_parameter axi_adrv9001_rx1_dma_1 CONFIG.DMA_2D_TRANSFER 0
+ad_ip_parameter axi_adrv9001_rx1_dma_1 CONFIG.DMA_DATA_WIDTH_SRC 64
+ad_ip_parameter axi_adrv9001_rx1_dma_1 CONFIG.CACHE_COHERENT 1
+
+# dma for rx2
+
+ad_ip_instance axi_dmac axi_adrv9001_rx2_dma_1
+ad_ip_parameter axi_adrv9001_rx2_dma_1 CONFIG.DMA_TYPE_SRC 1
+ad_ip_parameter axi_adrv9001_rx2_dma_1 CONFIG.DMA_TYPE_DEST 0
+ad_ip_parameter axi_adrv9001_rx2_dma_1 CONFIG.CYCLIC 0
+ad_ip_parameter axi_adrv9001_rx2_dma_1 CONFIG.SYNC_TRANSFER_START 1
+ad_ip_parameter axi_adrv9001_rx2_dma_1 CONFIG.AXI_SLICE_SRC 0
+ad_ip_parameter axi_adrv9001_rx2_dma_1 CONFIG.AXI_SLICE_DEST 0
+ad_ip_parameter axi_adrv9001_rx2_dma_1 CONFIG.DMA_2D_TRANSFER 0
+ad_ip_parameter axi_adrv9001_rx2_dma_1 CONFIG.DMA_DATA_WIDTH_SRC 32
+ad_ip_parameter axi_adrv9001_rx2_dma_1 CONFIG.CACHE_COHERENT 1
+
+# dma for tx1
+
+ad_ip_instance axi_dmac axi_adrv9001_tx1_dma_1
+ad_ip_parameter axi_adrv9001_tx1_dma_1 CONFIG.DMA_TYPE_SRC 0
+ad_ip_parameter axi_adrv9001_tx1_dma_1 CONFIG.DMA_TYPE_DEST 1
+ad_ip_parameter axi_adrv9001_tx1_dma_1 CONFIG.CYCLIC 1
+ad_ip_parameter axi_adrv9001_tx1_dma_1 CONFIG.SYNC_TRANSFER_START 0
+ad_ip_parameter axi_adrv9001_tx1_dma_1 CONFIG.AXI_SLICE_SRC 0
+ad_ip_parameter axi_adrv9001_tx1_dma_1 CONFIG.AXI_SLICE_DEST 0
+ad_ip_parameter axi_adrv9001_tx1_dma_1 CONFIG.DMA_2D_TRANSFER 0
+ad_ip_parameter axi_adrv9001_tx1_dma_1 CONFIG.DMA_DATA_WIDTH_DEST 64
+ad_ip_parameter axi_adrv9001_tx1_dma_1 CONFIG.CACHE_COHERENT 1
+
+# dma for tx2
+
+ad_ip_instance axi_dmac axi_adrv9001_tx2_dma_1
+ad_ip_parameter axi_adrv9001_tx2_dma_1 CONFIG.DMA_TYPE_SRC 0
+ad_ip_parameter axi_adrv9001_tx2_dma_1 CONFIG.DMA_TYPE_DEST 1
+ad_ip_parameter axi_adrv9001_tx2_dma_1 CONFIG.CYCLIC 1
+ad_ip_parameter axi_adrv9001_tx2_dma_1 CONFIG.SYNC_TRANSFER_START 0
+ad_ip_parameter axi_adrv9001_tx2_dma_1 CONFIG.AXI_SLICE_SRC 0
+ad_ip_parameter axi_adrv9001_tx2_dma_1 CONFIG.AXI_SLICE_DEST 0
+ad_ip_parameter axi_adrv9001_tx2_dma_1 CONFIG.DMA_2D_TRANSFER 0
+ad_ip_parameter axi_adrv9001_tx2_dma_1 CONFIG.DMA_DATA_WIDTH_DEST 32
+ad_ip_parameter axi_adrv9001_tx2_dma_1 CONFIG.CACHE_COHERENT 1
+
+# ad9001 connections
+
+ad_connect  sys_500m_clk       axi_adrv9001_1/delay_clk
+
+#### STILL UNDER REVIEW
+#ad_connect  axi_adrv9001_1/adc_1_clk axi_adrv9001_rx1_dma_1/fifo_wr_clk
+#ad_connect  axi_adrv9001_1/adc_2_clk axi_adrv9001_rx2_dma_1/fifo_wr_clk
+#ad_connect  axi_adrv9001_1/dac_1_clk axi_adrv9001_tx1_dma_1/m_axis_aclk
+#ad_connect  axi_adrv9001_1/dac_2_clk axi_adrv9001_tx2_dma_1/m_axis_aclk
+####
+
+ad_connect ref_clk           axi_adrv9001_1/ref_clk
+
+ad_connect tx_output_enable_1  axi_adrv9001_1/tx_output_enable
+
+ad_connect mssi_sync_1         axi_adrv9001_1/mssi_sync_in
+
+ad_connect rx1_dclk_in_1_n     axi_adrv9001_1/rx1_dclk_in_n_NC
+ad_connect rx1_dclk_in_1_p     axi_adrv9001_1/rx1_dclk_in_p_dclk_in
+ad_connect rx1_idata_in_1_n    axi_adrv9001_1/rx1_idata_in_n_idata0
+ad_connect rx1_idata_in_1_p    axi_adrv9001_1/rx1_idata_in_p_idata1
+ad_connect rx1_qdata_in_1_n    axi_adrv9001_1/rx1_qdata_in_n_qdata2
+ad_connect rx1_qdata_in_1_p    axi_adrv9001_1/rx1_qdata_in_p_qdata3
+ad_connect rx1_strobe_in_1_n   axi_adrv9001_1/rx1_strobe_in_n_NC
+ad_connect rx1_strobe_in_1_p   axi_adrv9001_1/rx1_strobe_in_p_strobe_in
+
+ad_connect rx2_dclk_in_1_n     axi_adrv9001_1/rx2_dclk_in_n_NC
+ad_connect rx2_dclk_in_1_p     axi_adrv9001_1/rx2_dclk_in_p_dclk_in
+ad_connect rx2_idata_in_1_n    axi_adrv9001_1/rx2_idata_in_n_idata0
+ad_connect rx2_idata_in_1_p    axi_adrv9001_1/rx2_idata_in_p_idata1
+ad_connect rx2_qdata_in_1_n    axi_adrv9001_1/rx2_qdata_in_n_qdata2
+ad_connect rx2_qdata_in_1_p    axi_adrv9001_1/rx2_qdata_in_p_qdata3
+ad_connect rx2_strobe_in_1_n   axi_adrv9001_1/rx2_strobe_in_n_NC
+ad_connect rx2_strobe_in_1_p   axi_adrv9001_1/rx2_strobe_in_p_strobe_in
+
+ad_connect tx1_dclk_out_1_n    axi_adrv9001_1/tx1_dclk_out_n_NC
+ad_connect tx1_dclk_out_1_p    axi_adrv9001_1/tx1_dclk_out_p_dclk_out
+ad_connect tx1_dclk_in_1_n     axi_adrv9001_1/tx1_dclk_in_n_NC
+ad_connect tx1_dclk_in_1_p     axi_adrv9001_1/tx1_dclk_in_p_dclk_in
+ad_connect tx1_idata_out_1_n   axi_adrv9001_1/tx1_idata_out_n_idata0
+ad_connect tx1_idata_out_1_p   axi_adrv9001_1/tx1_idata_out_p_idata1
+ad_connect tx1_qdata_out_1_n   axi_adrv9001_1/tx1_qdata_out_n_qdata2
+ad_connect tx1_qdata_out_1_p   axi_adrv9001_1/tx1_qdata_out_p_qdata3
+ad_connect tx1_strobe_out_1_n  axi_adrv9001_1/tx1_strobe_out_n_NC
+ad_connect tx1_strobe_out_1_p  axi_adrv9001_1/tx1_strobe_out_p_strobe_out
+
+ad_connect tx2_dclk_out_1_n    axi_adrv9001_1/tx2_dclk_out_n_NC
+ad_connect tx2_dclk_out_1_p    axi_adrv9001_1/tx2_dclk_out_p_dclk_out
+ad_connect tx2_dclk_in_1_n     axi_adrv9001_1/tx2_dclk_in_n_NC
+ad_connect tx2_dclk_in_1_p     axi_adrv9001_1/tx2_dclk_in_p_dclk_in
+ad_connect tx2_idata_out_1_n   axi_adrv9001_1/tx2_idata_out_n_idata0
+ad_connect tx2_idata_out_1_p   axi_adrv9001_1/tx2_idata_out_p_idata1
+ad_connect tx2_qdata_out_1_n   axi_adrv9001_1/tx2_qdata_out_n_qdata2
+ad_connect tx2_qdata_out_1_p   axi_adrv9001_1/tx2_qdata_out_p_qdata3
+ad_connect tx2_strobe_out_1_n  axi_adrv9001_1/tx2_strobe_out_n_NC
+ad_connect tx2_strobe_out_1_p  axi_adrv9001_1/tx2_strobe_out_p_strobe_out
+
+ad_connect rx1_enable_1        axi_adrv9001_1/rx1_enable
+ad_connect rx2_enable_1        axi_adrv9001_1/rx2_enable
+ad_connect tx1_enable_1        axi_adrv9001_1/tx1_enable
+ad_connect tx2_enable_1        axi_adrv9001_1/tx2_enable
+
+ad_connect gpio_rx1_enable_in_1  axi_adrv9001_1/gpio_rx1_enable_in
+ad_connect gpio_rx2_enable_in_1  axi_adrv9001_1/gpio_rx2_enable_in
+ad_connect gpio_tx1_enable_in_1  axi_adrv9001_1/gpio_tx1_enable_in
+ad_connect gpio_tx2_enable_in_1  axi_adrv9001_1/gpio_tx2_enable_in
+
+ad_connect tdd_sync_1 axi_adrv9001_1/tdd_sync
+ad_connect tdd_sync_cntr_1 axi_adrv9001_1/tdd_sync_cntr
+
+# adc clk resets
+ad_connect sys_cpu_resetn adc_clk_reset_2/ext_reset_in
+ad_connect sys_cpu_resetn adc_clk_reset_3/ext_reset_in
+ad_connect axi_adrv9001_1/adc_1_clk adc_clk_reset_2/slowest_sync_clk
+ad_connect axi_adrv9001_1/adc_2_clk adc_clk_reset_3/slowest_sync_clk
+
+# ADRV9002 <-> concat_0
+ad_connect axi_adrv9001_1/adc_1_enable_i0 concat_9002_2/adc_enable_i0
+ad_connect axi_adrv9001_1/adc_1_valid_i0  concat_9002_2/adc_valid_i0
+ad_connect axi_adrv9001_1/adc_1_data_i0   concat_9002_2/adc_data_i0
+ad_connect axi_adrv9001_1/adc_1_enable_q0 concat_9002_2/adc_enable_q0
+ad_connect axi_adrv9001_1/adc_1_valid_q0  concat_9002_2/adc_valid_q0
+ad_connect axi_adrv9001_1/adc_1_data_q0   concat_9002_2/adc_data_q0
+ad_connect axi_adrv9001_1/adc_1_enable_i1 concat_9002_2/adc_enable_i1
+ad_connect axi_adrv9001_1/adc_1_valid_i1  concat_9002_2/adc_valid_i1
+ad_connect axi_adrv9001_1/adc_1_data_i1   concat_9002_2/adc_data_i1
+ad_connect axi_adrv9001_1/adc_1_enable_q1 concat_9002_2/adc_enable_q1
+ad_connect axi_adrv9001_1/adc_1_valid_q1  concat_9002_2/adc_valid_q1
+ad_connect axi_adrv9001_1/adc_1_data_q1   concat_9002_2/adc_data_q1
+
+ad_connect axi_adrv9001_1/dac_1_enable_i0 concat_9002_2/dac_enable_i0
+ad_connect axi_adrv9001_1/dac_1_valid_i0  concat_9002_2/dac_valid_i0
+ad_connect axi_adrv9001_1/dac_1_enable_q0 concat_9002_2/dac_enable_q0
+ad_connect axi_adrv9001_1/dac_1_valid_q0  concat_9002_2/dac_valid_q0
+ad_connect axi_adrv9001_1/dac_1_enable_i1 concat_9002_2/dac_enable_i1
+ad_connect axi_adrv9001_1/dac_1_valid_i1  concat_9002_2/dac_valid_i1
+ad_connect axi_adrv9001_1/dac_1_enable_q1 concat_9002_2/dac_enable_q1
+ad_connect axi_adrv9001_1/dac_1_valid_q1  concat_9002_2/dac_valid_q1
+
+ad_connect concat_9002_2/dac_data_i0 axi_adrv9001_1/dac_1_data_i0
+ad_connect concat_9002_2/dac_data_q0 axi_adrv9001_1/dac_1_data_q0
+ad_connect concat_9002_2/dac_data_i1 axi_adrv9001_1/dac_1_data_i1
+ad_connect concat_9002_2/dac_data_q1 axi_adrv9001_1/dac_1_data_q1
+
+# ADRV9002 <-> concat_1
+ad_connect axi_adrv9001_1/adc_2_enable_i0 concat_9002_3/adc_enable_i0
+ad_connect axi_adrv9001_1/adc_2_valid_i0  concat_9002_3/adc_valid_i0
+ad_connect axi_adrv9001_1/adc_2_data_i0   concat_9002_3/adc_data_i0
+ad_connect axi_adrv9001_1/adc_2_enable_q0 concat_9002_3/adc_enable_q0
+ad_connect axi_adrv9001_1/adc_2_valid_q0  concat_9002_3/adc_valid_q0
+ad_connect axi_adrv9001_1/adc_2_data_q0   concat_9002_3/adc_data_q0
+ad_connect GND                            concat_9002_3/adc_enable_i1
+ad_connect GND                            concat_9002_3/adc_valid_i1
+ad_connect GND                            concat_9002_3/adc_data_i1
+ad_connect GND                            concat_9002_3/adc_enable_q1
+ad_connect GND                            concat_9002_3/adc_valid_q1
+ad_connect GND                            concat_9002_3/adc_data_q1
+
+ad_connect axi_adrv9001_1/dac_2_enable_i0 concat_9002_3/dac_enable_i0
+ad_connect axi_adrv9001_1/dac_2_valid_i0  concat_9002_3/dac_valid_i0
+ad_connect axi_adrv9001_1/dac_2_enable_q0 concat_9002_3/dac_enable_q0
+ad_connect axi_adrv9001_1/dac_2_valid_q0  concat_9002_3/dac_valid_q0
+
+ad_connect concat_9002_3/dac_data_i0 axi_adrv9001_1/dac_2_data_i0
+ad_connect concat_9002_3/dac_data_q0 axi_adrv9001_1/dac_2_data_q0
+
+# default_chan_block_2 -> ADRV9002
+ad_connect default_chan_block_2/adc_overflow  axi_adrv9001_1/adc_1_dovf
+ad_connect default_chan_block_2/dac_underflow axi_adrv9001_1/dac_1_dunf
+
+# default_chan_block_3 -> ADRV9002
+ad_connect default_chan_block_3/adc_overflow  axi_adrv9001_1/adc_2_dovf
+ad_connect default_chan_block_3/dac_underflow axi_adrv9001_1/dac_2_dunf
+
+# default_chan_block_2 <-> concat_0
+ad_connect concat_9002_2/adc_data   default_chan_block_2/adc_data
+ad_connect concat_9002_2/adc_enable default_chan_block_2/adc_enable
+ad_connect concat_9002_2/adc_valid  default_chan_block_2/adc_valid
+
+ad_connect default_chan_block_2/dac_data concat_9002_2/dac_data
+ad_connect concat_9002_2/dac_enable default_chan_block_2/dac_enable
+ad_connect concat_9002_2/dac_valid  default_chan_block_2/dac_valid
+
+# default_chan_block_3 <-> concat_1
+ad_connect concat_9002_3/adc_data   default_chan_block_3/adc_data
+ad_connect concat_9002_3/adc_enable default_chan_block_3/adc_enable
+ad_connect concat_9002_3/adc_valid  default_chan_block_3/adc_valid
+
+ad_connect default_chan_block_3/dac_data concat_9002_3/dac_data
+ad_connect concat_9002_3/dac_enable default_chan_block_3/dac_enable
+ad_connect concat_9002_3/dac_valid  default_chan_block_3/dac_valid
+
+# DAC_DMA -> default_chan_block
+ad_connect axi_adrv9001_tx1_dma_1/m_axis default_chan_block_2/s_dac_dma
+ad_connect axi_adrv9001_tx2_dma_1/m_axis default_chan_block_3/s_dac_dma
+
+# default_chan_block -> ADC_DMA
+ad_connect default_chan_block_2/m_adc_dma axi_adrv9001_rx1_dma_1/s_axis
+ad_connect default_chan_block_3/m_adc_dma axi_adrv9001_rx2_dma_1/s_axis
+
+# pps
+ad_connect pps default_chan_block_2/pps
+ad_connect pps default_chan_block_3/pps
+
+#### BREAK
+
+# Test Block: Clock and Resets
+ad_connect axi_adrv9001_1/adc_1_clk default_chan_block_2/adc_clk
+ad_connect axi_adrv9001_1/adc_2_clk default_chan_block_3/adc_clk
+ad_connect axi_adrv9001_1/dac_1_clk default_chan_block_2/dac_clk
+ad_connect axi_adrv9001_1/dac_2_clk default_chan_block_3/dac_clk
+ad_connect sys_user_clk default_chan_block_2/user_clk
+ad_connect sys_user_clk default_chan_block_2/m_adc_dma_aclk
+ad_connect sys_user_clk default_chan_block_2/s_dac_dma_aclk
+ad_connect sys_user_clk default_chan_block_3/user_clk
+ad_connect sys_user_clk default_chan_block_3/m_adc_dma_aclk
+ad_connect sys_user_clk default_chan_block_3/s_dac_dma_aclk
+ad_connect sys_user_clk axi_adrv9001_rx1_dma_1/s_axis_aclk
+ad_connect sys_user_clk axi_adrv9001_rx2_dma_1/s_axis_aclk
+ad_connect sys_user_clk axi_adrv9001_tx1_dma_1/m_axis_aclk
+ad_connect sys_user_clk axi_adrv9001_tx2_dma_1/m_axis_aclk
+
+ad_connect adc_clk_reset_2/peripheral_aresetn default_chan_block_2/adc_rstn
+ad_connect adc_clk_reset_2/peripheral_aresetn default_chan_block_2/dac_rstn
+ad_connect adc_clk_reset_3/peripheral_aresetn default_chan_block_3/adc_rstn
+ad_connect adc_clk_reset_3/peripheral_aresetn default_chan_block_3/dac_rstn
+ad_connect sys_user_resetn default_chan_block_2/user_resetn
+ad_connect sys_user_resetn default_chan_block_2/m_adc_dma_aresetn
+ad_connect sys_user_resetn default_chan_block_2/s_dac_dma_aresetn
+ad_connect sys_user_resetn default_chan_block_3/user_resetn
+ad_connect sys_user_resetn default_chan_block_3/m_adc_dma_aresetn
+ad_connect sys_user_resetn default_chan_block_3/s_dac_dma_aresetn
+
+# DMA
+ad_connect sys_cpu_resetn axi_adrv9001_rx1_dma_1/m_dest_axi_aresetn
+ad_connect sys_cpu_resetn axi_adrv9001_rx2_dma_1/m_dest_axi_aresetn
+
+# ADC
+ad_connect sys_cpu_resetn axi_adrv9001_tx1_dma_1/m_src_axi_aresetn
+ad_connect sys_cpu_resetn axi_adrv9001_tx2_dma_1/m_src_axi_aresetn
+
+# interconnects
+
+ad_cpu_interconnect 0x44A00000  axi_adrv9001_0
+ad_cpu_interconnect 0x44A30000  axi_adrv9001_rx1_dma_0
+ad_cpu_interconnect 0x44A40000  axi_adrv9001_rx2_dma_0
+ad_cpu_interconnect 0x44A50000  axi_adrv9001_tx1_dma_0
+ad_cpu_interconnect 0x44A60000  axi_adrv9001_tx2_dma_0
+ad_cpu_interconnect 0x44B00000  axi_adrv9001_1
+ad_cpu_interconnect 0x44B30000  axi_adrv9001_rx1_dma_1
+ad_cpu_interconnect 0x44B40000  axi_adrv9001_rx2_dma_1
+ad_cpu_interconnect 0x44B50000  axi_adrv9001_tx1_dma_1
+ad_cpu_interconnect 0x44B60000  axi_adrv9001_tx2_dma_1
+ad_cpu_interconnect 0x7B000000  default_chan_block_0
+ad_cpu_interconnect 0x7C000000  default_chan_block_1
+ad_cpu_interconnect 0x7D000000  default_chan_block_2
+ad_cpu_interconnect 0x7E000000  default_chan_block_3
+
+# memory interconnect
+ad_mem_hpc0_interconnect sys_cpu_clk sys_ps8/S_AXI_HPC0
+ad_mem_hpc0_interconnect sys_cpu_clk axi_adrv9001_rx1_dma_0/m_dest_axi
+ad_mem_hpc0_interconnect sys_cpu_clk axi_adrv9001_rx2_dma_0/m_dest_axi
+ad_mem_hpc0_interconnect sys_cpu_clk axi_adrv9001_tx1_dma_0/m_src_axi
+ad_mem_hpc0_interconnect sys_cpu_clk axi_adrv9001_tx2_dma_0/m_src_axi
+ad_mem_hpc0_interconnect sys_cpu_clk axi_adrv9001_rx1_dma_1/m_dest_axi
+ad_mem_hpc0_interconnect sys_cpu_clk axi_adrv9001_rx2_dma_1/m_dest_axi
+ad_mem_hpc0_interconnect sys_cpu_clk axi_adrv9001_tx1_dma_1/m_src_axi
+ad_mem_hpc0_interconnect sys_cpu_clk axi_adrv9001_tx2_dma_1/m_src_axi
 
 # interrupts
+ad_cpu_interrupt ps-13 mb-12 axi_adrv9001_rx1_dma_0/irq
+ad_cpu_interrupt ps-12 mb-11 axi_adrv9001_rx2_dma_0/irq
+ad_cpu_interrupt ps-9  mb-6 axi_adrv9001_tx1_dma_0/irq
+ad_cpu_interrupt ps-10 mb-5 axi_adrv9001_tx2_dma_0/irq
 
-ad_cpu_interrupt ps-12 mb-12 axi_ad9361_dac_dma_0/irq
-ad_cpu_interrupt ps-13 mb-13 axi_ad9361_adc_dma_0/irq
-
-ad_cpu_interrupt ps-14 mb-14 axi_ad9361_dac_dma_1/irq
-ad_cpu_interrupt ps-15 mb-15 axi_ad9361_adc_dma_1/irq
+ad_cpu_interrupt ps-7 mb-10 axi_adrv9001_rx1_dma_1/irq
+ad_cpu_interrupt ps-8 mb-9 axi_adrv9001_rx2_dma_1/irq
+ad_cpu_interrupt ps-5 mb-8 axi_adrv9001_tx1_dma_1/irq
+ad_cpu_interrupt ps-6 mb-7 axi_adrv9001_tx2_dma_1/irq
