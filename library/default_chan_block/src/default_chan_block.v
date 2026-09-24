@@ -4,6 +4,7 @@
 
 module default_chan_block #(
   parameter CLK_FREQ = 100000000,
+  parameter CIC_ENABLE = 1,
   parameter ENABLE_DUAL_CIC = 0,
   parameter ENABLE_DUAL_CHAN = 0
 )(
@@ -271,6 +272,7 @@ module default_chan_block #(
 
   default_chan_block_user #(
     .CLK_FREQ(CLK_FREQ),
+    .CIC_ENABLE(CIC_ENABLE),
     .ENABLE_DUAL_CIC(ENABLE_DUAL_CIC),
     .ENABLE_DUAL_CHAN(ENABLE_DUAL_CHAN)
   )

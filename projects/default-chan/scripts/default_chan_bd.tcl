@@ -60,6 +60,9 @@ create_bd_port -dir I gpio_tx2_enable_in
 create_bd_port -dir I tdd_sync
 create_bd_port -dir O tdd_sync_cntr
 
+create_bd_port -dir I send_count
+create_bd_port -dir I reset_count
+
 create_bd_port -dir I pps
 
 # Create Blocks
@@ -70,8 +73,6 @@ ad_ip_instance axi_adrv9001 axi_adrv9001
 ad_ip_parameter axi_adrv9001 CONFIG.CMOS_LVDS_N 0
 ad_ip_parameter axi_adrv9001 CONFIG.USE_RX_CLK_FOR_TX1 1
 ad_ip_parameter axi_adrv9001 CONFIG.USE_RX_CLK_FOR_TX2 2
-ad_ip_parameter axi_adrv9001 CONFIG.RX_USE_BUFG 1
-ad_ip_parameter axi_adrv9001 CONFIG.TX_USE_BUFG 1
 
 ad_ip_instance proc_sys_reset adc_clk_reset_0
 ad_ip_instance proc_sys_reset adc_clk_reset_1
@@ -79,11 +80,21 @@ ad_ip_instance proc_sys_reset adc_clk_reset_1
 ad_ip_instance concat_9002 concat_9002_0
 ad_ip_instance concat_9002 concat_9002_1
 
+ad_ip_instance data_order data_order_0
+ad_ip_instance data_order data_order_1
+
+create_bd_cell -type inline_hdl -vlnv xilinx.com:inline_hdl:ilvector_logic:1.0 reset_invert_0
+set_property -dict [list CONFIG.C_OPERATION {not} CONFIG.C_SIZE {1}] [get_bd_cells reset_invert_0]
+
+create_bd_cell -type inline_hdl -vlnv xilinx.com:inline_hdl:ilvector_logic:1.0 reset_invert_1
+set_property -dict [list CONFIG.C_OPERATION {not} CONFIG.C_SIZE {1}] [get_bd_cells reset_invert_1]
 ad_ip_instance  default_chan_block   default_chan_block_0
 ad_ip_parameter default_chan_block_0 CONFIG.CLK_FREQ 100000000
+ad_ip_parameter default_chan_block_0 CONFIG.CIC_ENABLE 0
 
 ad_ip_instance  default_chan_block   default_chan_block_1
 ad_ip_parameter default_chan_block_1 CONFIG.CLK_FREQ 100000000
+ad_ip_parameter default_chan_block_1 CONFIG.CIC_ENABLE 0
 
 # dma for rx1
 
@@ -271,20 +282,38 @@ ad_connect default_chan_block_0/dac_underflow axi_adrv9001/dac_1_dunf
 ad_connect default_chan_block_1/adc_overflow  axi_adrv9001/adc_2_dovf
 ad_connect default_chan_block_1/dac_underflow axi_adrv9001/dac_2_dunf
 
-# default_chan_block_0 <-> concat_0
-ad_connect concat_9002_0/adc_data   default_chan_block_0/adc_data
-ad_connect concat_9002_0/adc_enable default_chan_block_0/adc_enable
-ad_connect concat_9002_0/adc_valid  default_chan_block_0/adc_valid
+# data_order_0
+ad_connect axi_adrv9001/adc_1_rst   reset_invert_0/Op1
+ad_connect reset_invert_0/Res       data_order_0/adc_rstn
+ad_connect send_count               data_order_0/send_count
+ad_connect reset_count              data_order_0/reset_count
 
+# data_order_1
+ad_connect axi_adrv9001/adc_2_rst   reset_invert_1/Op1
+ad_connect reset_invert_1/Res       data_order_1/adc_rstn
+ad_connect send_count               data_order_1/send_count
+ad_connect reset_count              data_order_1/reset_count
+
+# default_chan_block_0 <-> concat_0
+ad_connect concat_9002_0/adc_data   data_order_0/adc_data_in
+ad_connect concat_9002_0/adc_enable data_order_0/adc_enable_in
+ad_connect concat_9002_0/adc_valid  data_order_0/adc_valid_in
+
+ad_connect data_order_0/adc_data_out   default_chan_block_0/adc_data
+ad_connect data_order_0/adc_enable_out default_chan_block_0/adc_enable
+ad_connect data_order_0/adc_valid_out  default_chan_block_0/adc_valid
 ad_connect default_chan_block_0/dac_data concat_9002_0/dac_data
 ad_connect concat_9002_0/dac_enable default_chan_block_0/dac_enable
 ad_connect concat_9002_0/dac_valid  default_chan_block_0/dac_valid
 
 # default_chan_block_1 <-> concat_1
-ad_connect concat_9002_1/adc_data   default_chan_block_1/adc_data
-ad_connect concat_9002_1/adc_enable default_chan_block_1/adc_enable
-ad_connect concat_9002_1/adc_valid  default_chan_block_1/adc_valid
+ad_connect concat_9002_1/adc_data   data_order_1/adc_data_in
+ad_connect concat_9002_1/adc_enable data_order_1/adc_enable_in
+ad_connect concat_9002_1/adc_valid  data_order_1/adc_valid_in
 
+ad_connect data_order_1/adc_data_out   default_chan_block_1/adc_data
+ad_connect data_order_1/adc_enable_out default_chan_block_1/adc_enable
+ad_connect data_order_1/adc_valid_out  default_chan_block_1/adc_valid
 ad_connect default_chan_block_1/dac_data concat_9002_1/dac_data
 ad_connect concat_9002_1/dac_enable default_chan_block_1/dac_enable
 ad_connect concat_9002_1/dac_valid  default_chan_block_1/dac_valid
@@ -308,6 +337,8 @@ ad_connect axi_adrv9001/adc_1_clk default_chan_block_0/adc_clk
 ad_connect axi_adrv9001/adc_2_clk default_chan_block_1/adc_clk
 ad_connect axi_adrv9001/dac_1_clk default_chan_block_0/dac_clk
 ad_connect axi_adrv9001/dac_2_clk default_chan_block_1/dac_clk
+ad_connect axi_adrv9001/adc_1_clk data_order_0/adc_clk
+ad_connect axi_adrv9001/adc_2_clk data_order_1/adc_clk
 ad_connect sys_user_clk default_chan_block_0/user_clk
 ad_connect sys_user_clk default_chan_block_0/m_adc_dma_aclk
 ad_connect sys_user_clk default_chan_block_0/s_dac_dma_aclk
